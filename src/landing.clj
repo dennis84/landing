@@ -1,7 +1,7 @@
 (ns landing
   (:use [compojure.core]
         [markdown.core :only (md-to-html-string)]
-        [hiccup.page :only (html5)])
+        [hiccup.page :only (html5 include-js include-css)])
   (:require [clj-http.client :as client]
             [compojure.handler :as handler]
             [compojure.route :as route]))
@@ -11,7 +11,9 @@
 
 (defn- make-landing-page [html]
   (html5
-    [:head [:title ""]]
+    [:head [:title ""]
+           (include-css "/css/index.css")
+           (include-js "/js/landing.js")]
     [:body html]))
 
 (defn landing-page [user repo]
@@ -22,6 +24,7 @@
     (make-landing-page html)))
 
 (defroutes app-routes
+  (route/resources "/" {:root ""})
   (GET "/:user/:repo" [user repo] (landing-page user repo))
   (route/not-found "Not Found"))
 
