@@ -4,6 +4,7 @@
   (:require [clj-http.client :as client]
             [compojure.handler :as handler]
             [compojure.route :as route]
+            [ring.adapter.jetty :as jetty]
             [landing.view :as view]))
 
 (defn- make-github-url [user repo path]
@@ -23,3 +24,6 @@
 
 (def app
   (handler/site app-routes))
+
+(defn -main [port]
+  (jetty/run-jetty app {:port (Integer. port) :join? false}))
