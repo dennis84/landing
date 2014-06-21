@@ -1,27 +1,20 @@
 (ns landing
   (:use [compojure.core]
-        [landing.markdown]
-        [hiccup.page :only (html5 include-js include-css)])
+        [landing.markdown])
   (:require [clj-http.client :as client]
             [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [landing.view :as view]))
 
 (defn- make-github-url [user repo path]
   (str "https://raw.githubusercontent.com/" user "/" repo "/master/" path))
-
-(defn- make-landing-page [html]
-  (html5
-    [:head [:title ""]
-           (include-css "/css/index.css")
-           (include-js "/js/landing.js")]
-    [:body html]))
 
 (defn landing-page [user repo]
   (let [get-file (partial make-github-url user repo)
         resp (client/get (get-file "README.md"))
         markdown (:body resp)
         html (parse-markdown markdown)]
-    (make-landing-page html)))
+    (view/landing-page html)))
 
 (defroutes app-routes
   (route/resources "/" {:root ""})

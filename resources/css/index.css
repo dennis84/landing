@@ -3,8 +3,17 @@ html, body {
 }
 
 section {
-  height: 100%;
+  min-height: 100%;
   text-align: center;
+  display: -moz-box;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: box;
+  box-pack: center;
+  box-align: center;
 }
 
 section:nth-child(odd) {
@@ -13,4 +22,8 @@ section:nth-child(odd) {
 
 section:nth-child(even) {
   background: #eee;
+}
+
+pre, code {
+  text-align: left;
 }

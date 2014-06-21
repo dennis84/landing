@@ -7,8 +7,8 @@
 (def markdown (join "\n" ["# Foo" "blah" "## Bar" "blub"]))
 
 (def html (str "<!DOCTYPE html>\n<html>"
-               "<section><h1>Foo</h1><p>blah</p></section>"
-               "<section><h2>Bar</h2><p>blub</p></section></html>"))
+               "<section><div><h1>Foo</h1><p>blah</p></div></section>"
+               "<section><div><h2>Bar</h2><p>blub</p></div></section></html>"))
 
 (deftest foo
   (is (= html (html5 (parse-markdown markdown)))))

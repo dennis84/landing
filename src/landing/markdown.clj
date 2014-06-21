@@ -12,7 +12,7 @@
   (->> nodes
        make-partitions
        make-sections
-       (map #(vector :section {} %))))
+       (map #(vector :section {} (vector :div {} %)))))
 
 (defn parse-markdown [md]
   (let [processor (PegDownProcessor. Extensions/ALL)
