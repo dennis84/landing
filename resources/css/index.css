@@ -24,6 +24,12 @@ section:nth-child(even) {
   background: #eee;
 }
 
+.highlight {
+  border-radius: 3px;
+}
+
 pre, code {
   text-align: left;
+  border: 0;
+  background: none;
 }
