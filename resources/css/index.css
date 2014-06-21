@@ -1,0 +1,16 @@
+html, body {
+  height: 100%;
+}
+
+section {
+  height: 100%;
+  text-align: center;
+}
+
+section:nth-child(odd) {
+  background: #fff;
+}
+
+section:nth-child(even) {
+  background: #eee;
+}

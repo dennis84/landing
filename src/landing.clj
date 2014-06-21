@@ -1,6 +1,6 @@
 (ns landing
   (:use [compojure.core]
-        [markdown.core :only (md-to-html-string)]
+        [landing.markdown]
         [hiccup.page :only (html5 include-js include-css)])
   (:require [clj-http.client :as client]
             [compojure.handler :as handler]
@@ -20,7 +20,7 @@
   (let [get-file (partial make-github-url user repo)
         resp (client/get (get-file "README.md"))
         markdown (:body resp)
-        html (md-to-html-string markdown)]
+        html (parse-markdown markdown)]
     (make-landing-page html)))
 
 (defroutes app-routes
