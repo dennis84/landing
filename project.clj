@@ -4,9 +4,7 @@
                  [compojure "1.1.8"]
                  [ring/ring-jetty-adapter "1.3.0"]
                  [clj-http "0.9.2"]
-                 [hiccup "1.0.5"]
-                 [clj-tagsoup "0.3.0"]
-                 [org.pegdown/pegdown "1.4.2"]]
+                 [hiccup "1.0.5"]]
   :plugins [[lein-ring "0.8.11"]]
   :ring {:handler landing/app}
   :uberjar-name "landing-standalone.jar"

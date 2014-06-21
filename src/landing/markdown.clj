@@ -1,25 +1,13 @@
 (ns landing.markdown
-  (:use [pl.danieljanus.tagsoup :only (parse-string tag children)])
-  (:import [org.pegdown PegDownProcessor Extensions]))
+  (:require [clj-http.client :as client]))
 
-(defn- make-partitions [xs]
-  (partition-by #(or (= :h1 (tag %)) (= :h2 (tag %))) xs))
+(def github-markdown-url
+  (let [token (System/getenv "GITHUB_TOKEN")]
+    (str "https://api.github.com/markdown/raw?access_token=" token)))
 
-(defn- make-sections [xs]
-  (for [[a b] (partition 2 xs)](concat a b)))
-
-(defn- make-hiccup-sections [nodes]
-  (->> nodes
-       make-partitions
-       make-sections
-       (map #(vector :section {} (vector :div {} %)))))
+(defn- markdown-to-html [md]
+  (:body (client/post github-markdown-url {:content-type "text/x-markdown"
+                                           :body md})))
 
 (defn parse-markdown [md]
-  (let [processor (PegDownProcessor. Extensions/ALL)
-        html (.markdownToHtml processor md)]
-    (-> html
-        parse-string
-        children
-        first
-        children
-        make-hiccup-sections)))
+  (markdown-to-html md))
