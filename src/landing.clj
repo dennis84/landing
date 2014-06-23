@@ -7,14 +7,13 @@
             [ring.adapter.jetty :as jetty]
             [landing.templating :as tpl]))
 
-(defn- make-github-url [user repo branch path]
-  (str "https://raw.githubusercontent.com/" user "/" repo "/" branch "/" path))
-
 (defn- get-theme []
-  (:body (client/get (make-github-url "dennis84" "landing-theme" "gh-pages" "index.html"))))
+  (:body (client/get "https://raw.githubusercontent.com/dennis84/landing-theme/gh-pages/index.html")))
 
 (defn- get-readme [user repo]
-  (:body (client/get (make-github-url user repo "master" "README.md"))))
+  (let [token (System/getenv "GITHUB_TOKEN")
+        url (str "https://api.github.com/repos/" user "/" repo "/readme?access_token=" token)]
+    (:body (client/get url {:accept "application/vnd.github.VERSION.raw"}))))
 
 (defn- homepage [] "Usage: username/repo")
 
