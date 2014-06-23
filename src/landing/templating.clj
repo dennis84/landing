@@ -3,5 +3,5 @@
 (defn replace-params [text params]
   (clojure.string/replace text 
     #"\{(\w+)}"
-    (fn [[_ groups]]
-      ((keyword groups) params))))
+    (fn [[k groups]]
+      (get params (keyword groups) k))))
